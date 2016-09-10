@@ -3,8 +3,7 @@
 //
 
 #include "CellCar.h"
-#include <ctime>
-#include <cstdlib>
+#include <random>
 #include <vector>
 #include <algorithm>
 
@@ -19,9 +18,9 @@ const int CellCar::getY() const {
 }
 
 CellCar::CellCar(int x, int y) : x(x), y(y) {
-    srand((int) time(0));
+    random_device rd;
     const int MAXSPEED = 5, MINSPEED = 1;
-    speed = rand() % (MAXSPEED + 1 - MINSPEED) + MINSPEED;
+    speed = rd() % (MAXSPEED + 1 - MINSPEED) + MINSPEED;
     _dir = FORWARD;
 }
 
@@ -56,51 +55,51 @@ bool operator==(const CellCar &objstruct1, const CellCar &objstruct2)  //重载�
 
 void CellCar::syncSpeed(vector<CellCar>::iterator begin, vector<CellCar>::iterator end) {
     bool flag = true;
-    CellCar *temp;
+    CellCar *temp = 0;
     switch (_dir) {
         case FORWARD:
             for (int i = 1; i <= SAFEGAP; ++i) {
-                *temp = CellCar(x, y + i);
+                temp = new CellCar(x, y + i);
                 flag &= find(begin, end, *temp) != end;
             }
             if (flag)
                 speed = 0;
             else
-                speed + ACC == SPEEDLIMIT ? speed = SPEEDLIMIT : speed += ACC;
+                speed + ACC >= SPEEDLIMIT ? speed = SPEEDLIMIT : speed += ACC;
             break;
 
         case BACK:
             bool flag;
             for (int i = 1; i <= SAFEGAP; ++i) {
-                *temp = CellCar(x, y - i);
+                temp = new CellCar(x, y - i);
                 flag &= find(begin, end, *temp) != end;
             }
             if (flag)
                 speed = 0;
             else
-                speed + ACC == SPEEDLIMIT ? speed = SPEEDLIMIT : speed += ACC;
+                speed + ACC >= SPEEDLIMIT ? speed = SPEEDLIMIT : speed += ACC;
             break;
 
         case LEFT:
             for (int i = 1; i <= SAFEGAP; ++i) {
-                *temp = CellCar(x + i, y);
+                temp = new CellCar(x + i, y);
                 flag &= find(begin, end, *temp) != end;
             }
             if (flag)
                 speed = 0;
             else
-                speed + ACC == SPEEDLIMIT ? speed = SPEEDLIMIT : speed += ACC;
+                speed + ACC >= SPEEDLIMIT ? speed = SPEEDLIMIT : speed += ACC;
             break;
 
         case RIGHT:
             for (int i = 1; i <= SAFEGAP; ++i) {
-                *temp = CellCar(x - i, y);
+                temp = new CellCar(x - i, y);
                 flag &= find(begin, end, *temp) != end;
             }
             if (flag)
                 speed = 0;
             else
-                speed + ACC == SPEEDLIMIT ? speed = SPEEDLIMIT : speed += ACC;
+                speed + ACC >= SPEEDLIMIT ? speed = SPEEDLIMIT : speed += ACC;
             break;
     }
 }
