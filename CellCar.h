@@ -12,13 +12,13 @@
 
 #define SAFEGAP 2
 #define SPEEDLIMIT 5
-#define ACC 1
+#define ACC 1.0
 
 #include <vector>
 
 class CellCar {
-    int speed;
-    int x, y;
+    double speed;
+    double x, y;
     int _dir;
 
     void turn(int direction);

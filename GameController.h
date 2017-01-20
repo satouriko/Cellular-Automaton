@@ -11,11 +11,15 @@
 #include <QPainter>
 #include <QWidget>
 
-#define CARNUM 100
 #define LEFTXLIM 0
 #define RIGHTXLIM 10 //Exclude
 #define TOPYLIM 0
-#define BOTTOMYLIM 10 //Exclude
+#define BOTTOMYLIM 30 //Exclude
+#define FPS 50
+#define GENFREQ 10 //Num of waves car factory produce per second
+
+//ACC has an effect on time. So that it's not strange that speed correlate to FPS
+//High FPS causes splash screen
 
 class GameController : public QWidget
 {

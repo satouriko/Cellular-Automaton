@@ -1,4 +1,5 @@
 #include "drawhelper.h"
+#include "GameController.h"
 
 using namespace std;
 
@@ -20,7 +21,7 @@ void DrawHelper::clc()
 {
     this->painter->setPen(QPen(Qt::white, 2, Qt::SolidLine, Qt::RoundCap));
     this->painter->setBrush(QBrush(Qt::white, Qt::SolidPattern));
-    this->painter->drawRect(0, 0, 2048, 2048);
+    this->painter->drawRect(0, 0, 10 * RIGHTXLIM, 10 * BOTTOMYLIM);
 }
 
 void DrawHelper::drawCar(CellCar &car)
@@ -28,5 +29,5 @@ void DrawHelper::drawCar(CellCar &car)
     this->painter->setRenderHint(QPainter::Antialiasing, true);
     this->painter->setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap));
     this->painter->setBrush(QBrush(Qt::black, Qt::SolidPattern));
-    this->painter->drawRect(car.getX() * 10, car.getY() * 10, 10, 10);
+    this->painter->drawRect((int)(car.getX() * 10), (int)(car.getY() * 10), 10, 10);
 }

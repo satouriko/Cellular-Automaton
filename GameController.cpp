@@ -17,7 +17,7 @@ GameController::GameController() {}
 void GameController::startLooping() {
     QTimer *timer = new QTimer(this);
     connect( timer, SIGNAL(timeout()), this, SLOT( loop() ) );
-    timer->start(1000);
+    timer->start(1000 / FPS);
 }
 
 void GameController::loop()
@@ -40,10 +40,14 @@ void GameController::draw(QPainter *painter) {
 
 void GameController::carFactory()
 {
-    for(int i = LEFTXLIM; i < RIGHTXLIM; ++i) {
-        if(rand() % 2) {
-            CellCar *c = new CellCar(i, TOPYLIM);
-            this->stage.push_back(*c);
+    static int cnt = 1;
+    if(cnt++ % (FPS / GENFREQ) == 0) {
+        for(int i = LEFTXLIM; i < RIGHTXLIM; ++i) {
+            if(rand() % 2) {
+                CellCar *c = new CellCar(i, TOPYLIM);
+                this->stage.push_back(*c);
+            }
         }
+        cnt = 1;
     }
 }
