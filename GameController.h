@@ -13,9 +13,9 @@
 
 #define CARNUM 100
 #define LEFTXLIM 0
-#define RIGHTXLIM 3 //Exclude
+#define RIGHTXLIM 10 //Exclude
 #define TOPYLIM 0
-#define BOTTOMYLIM 100 //Exclude
+#define BOTTOMYLIM 10 //Exclude
 
 class GameController : public QWidget
 {

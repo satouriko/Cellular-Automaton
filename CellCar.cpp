@@ -54,13 +54,16 @@ bool operator==(const CellCar &objstruct1, const CellCar &objstruct2)  //重载�
 }
 
 void CellCar::syncSpeed(vector<CellCar>::iterator begin, vector<CellCar>::iterator end) {
-    bool flag = true;
+    bool flag = false;
     CellCar *temp = 0;
     switch (_dir) {
         case FORWARD:
             for (int i = 1; i <= SAFEGAP; ++i) {
                 temp = new CellCar(x, y + i);
-                flag &= find(begin, end, *temp) != end;
+                if(find(begin, end, *temp) != end) {
+                    flag = true;
+                    break;
+                }
             }
             if (flag)
                 speed = 0;
@@ -72,7 +75,10 @@ void CellCar::syncSpeed(vector<CellCar>::iterator begin, vector<CellCar>::iterat
             bool flag;
             for (int i = 1; i <= SAFEGAP; ++i) {
                 temp = new CellCar(x, y - i);
-                flag &= find(begin, end, *temp) != end;
+                if(find(begin, end, *temp) != end) {
+                    flag = true;
+                    break;
+                }
             }
             if (flag)
                 speed = 0;
@@ -83,7 +89,10 @@ void CellCar::syncSpeed(vector<CellCar>::iterator begin, vector<CellCar>::iterat
         case LEFT:
             for (int i = 1; i <= SAFEGAP; ++i) {
                 temp = new CellCar(x + i, y);
-                flag &= find(begin, end, *temp) != end;
+                if(find(begin, end, *temp) != end) {
+                    flag = true;
+                    break;
+                }
             }
             if (flag)
                 speed = 0;
@@ -94,7 +103,10 @@ void CellCar::syncSpeed(vector<CellCar>::iterator begin, vector<CellCar>::iterat
         case RIGHT:
             for (int i = 1; i <= SAFEGAP; ++i) {
                 temp = new CellCar(x - i, y);
-                flag &= find(begin, end, *temp) != end;
+                if(find(begin, end, *temp) != end) {
+                    flag = true;
+                    break;
+                }
             }
             if (flag)
                 speed = 0;

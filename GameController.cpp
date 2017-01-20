@@ -24,6 +24,8 @@ void GameController::loop()
 {
     emit onRedraw();
     for (vector<CellCar>::iterator iter = this->stage.begin(); iter != this->stage.end(); ++iter) {
+        if(iter->getY() > BOTTOMYLIM)
+            iter = stage.erase(iter);
         iter->moveOn(this->stage.begin(), this->stage.end());
     }
     carFactory();
