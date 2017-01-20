@@ -12,13 +12,14 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
+public slots:
+    void redraw();
 private:
     Ui::MainWindow *ui;
+    GameController *gc;
 };
 
 #endif // MAINWINDOW_H

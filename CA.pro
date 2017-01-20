@@ -27,10 +27,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     CellCar.cpp \
     GameController.cpp \
-    Main.cpp
+    drawhelper.cpp \
+    arenawidget.cpp
 
 HEADERS  += mainwindow.h \
     CellCar.h \
-    GameController.h
+    GameController.h \
+    drawhelper.h \
+    arenawidget.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    arenawidget.ui

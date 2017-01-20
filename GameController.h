@@ -6,16 +6,31 @@
 #define CA_GAMECONTROLLER_H
 
 #include "CellCar.h"
+#include "drawhelper.h"
 #include <vector>
+#include <QPainter>
+#include <QWidget>
 
 #define CARNUM 100
-#define LEFTXLIM 1
-#define RIGHTXLIM 3
-#define TOPYLIM 1
-#define BOTTOMYLIM 100
+#define LEFTXLIM 0
+#define RIGHTXLIM 3 //Exclude
+#define TOPYLIM 0
+#define BOTTOMYLIM 100 //Exclude
 
-void loop(std::vector<CellCar>&);
-void draw(std::vector<CellCar>&);
-std::vector<CellCar> createMap();
-
+class GameController : public QWidget
+{
+    Q_OBJECT
+public:
+    GameController();
+    void startLooping();
+public slots:
+    void draw(QPainter *painter);
+    void loop();
+signals:
+    void onRedraw();
+private:
+    DrawHelper dh;
+    std::vector<CellCar> stage;
+    void carFactory();
+};
 #endif //CA_GAMECONTROLLER_H
