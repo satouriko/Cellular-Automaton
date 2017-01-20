@@ -6,6 +6,8 @@
 #include <random>
 #include <vector>
 #include <algorithm>
+#include <ctime>
+#include <cstdlib>
 
 using namespace std;
 
@@ -18,9 +20,8 @@ const int CellCar::getY() const {
 }
 
 CellCar::CellCar(int x, int y) : x(x), y(y) {
-    random_device rd;
     const int MAXSPEED = 5, MINSPEED = 1;
-    speed = rd() % (MAXSPEED + 1 - MINSPEED) + MINSPEED;
+    speed = rand() % (MAXSPEED + 1 - MINSPEED) + MINSPEED;
     _dir = FORWARD;
 }
 
@@ -117,7 +118,6 @@ void CellCar::syncSpeed(vector<CellCar>::iterator begin, vector<CellCar>::iterat
 }
 
 void CellCar::turn() {
-    srand((int) time(0));
     bool flag = rand() % 2;
     if (flag)
         turn(LEFT);

@@ -40,9 +40,8 @@ void GameController::draw(QPainter *painter) {
 
 void GameController::carFactory()
 {
-    random_device rd;
     for(int i = LEFTXLIM; i < RIGHTXLIM; ++i) {
-        if(rd() % 2) {
+        if(rand() % 2) {
             CellCar *c = new CellCar(i, TOPYLIM);
             this->stage.push_back(*c);
         }
