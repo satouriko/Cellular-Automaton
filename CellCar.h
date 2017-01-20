@@ -10,9 +10,9 @@
 #define LEFT 1
 #define RIGHT 3
 
-#define SAFEGAP 2
-#define SPEEDLIMIT 5
-#define ACC 1.0
+#define SAFEGAP 1
+#define SPEEDLIMIT 100
+#define ACC 2.0
 
 #include <vector>
 

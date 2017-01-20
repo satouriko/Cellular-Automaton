@@ -2,13 +2,13 @@
 // Created by lijiahao on 9/10/16.
 //
 
+#include "GameController.h"
 #include "CellCar.h"
 #include <random>
 #include <vector>
 #include <algorithm>
 #include <ctime>
 #include <cstdlib>
-#include "GameController.h"
 #include <cmath>
 
 using namespace std;
@@ -53,7 +53,7 @@ void CellCar::turn(int direction) {
 
 bool operator==(const CellCar &objstruct1, const CellCar &objstruct2)  //重载“==”操作符
 {
-    return fabs(objstruct1.getX() - objstruct2.getX()) <= 0 && objstruct1.getY() < objstruct2.getY() && objstruct2.getY() - objstruct1.getY() <= 0.5;//具体匹配条件自己设定，可以设定多个
+    return fabs(objstruct1.getX() - objstruct2.getX()) <= 0 && objstruct1.getY() > objstruct2.getY() && objstruct1.getY() - objstruct2.getY() <= 1.0;//具体匹配条件自己设定，可以设定多个
 }
 
 void CellCar::syncSpeed(vector<CellCar>::iterator begin, vector<CellCar>::iterator end) {

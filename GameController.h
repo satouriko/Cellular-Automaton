@@ -12,11 +12,11 @@
 #include <QWidget>
 
 #define LEFTXLIM 0
-#define RIGHTXLIM 10 //Exclude
+#define RIGHTXLIM 100 //Exclude
 #define TOPYLIM 0
-#define BOTTOMYLIM 30 //Exclude
+#define BOTTOMYLIM 100 //Exclude
 #define FPS 50
-#define GENFREQ 10 //Num of waves car factory produce per second
+#define GENFREQ 1 //Num of waves car factory produce per second
 
 //ACC has an effect on time. So that it's not strange that speed correlate to FPS
 //High FPS causes splash screen
