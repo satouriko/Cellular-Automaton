@@ -2,8 +2,8 @@
 // Created by lijiahao on 9/10/16.
 //
 
-#include "GameController.h"
-#include "CellCar.h"
+#include "gamecontroller.h"
+#include "cellcar.h"
 #include <random>
 #include <vector>
 #include <algorithm>
@@ -13,19 +13,11 @@
 
 using namespace std;
 
-const double CellCar::getX() const {
-    return x;
-}
-
-const double CellCar::getY() const {
-    return y;
-}
-
 const double CellCar::getSpeed() const {
     return speed;
 }
 
-CellCar::CellCar(int x, int y) : x(x), y(y) {
+CellCar::CellCar(int x, int y) : Cell(x, y) {
     const int MAXSPEED = 5, MINSPEED = 1;
     speed = rand() % (MAXSPEED + 1 - MINSPEED) + MINSPEED;
     _dir = FORWARD;

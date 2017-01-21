@@ -5,14 +5,14 @@
 #ifndef CA_GAMECONTROLLER_H
 #define CA_GAMECONTROLLER_H
 
-#include "CellCar.h"
+#include "cellcar.h"
 #include "drawhelper.h"
 #include <vector>
 #include <QPainter>
 #include <QWidget>
 
 #define LEFTXLIM 0
-#define RIGHTXLIM 100 //Exclude
+#define RIGHTXLIM 6 //Exclude
 #define TOPYLIM 0
 #define BOTTOMYLIM 100 //Exclude
 #define FPS 50
@@ -35,6 +35,8 @@ signals:
 private:
     DrawHelper dh;
     std::vector<CellCar> stage;
+    std::vector<CellBlock> edge;
     void carFactory();
+    void blockFactory();
 };
 #endif //CA_GAMECONTROLLER_H

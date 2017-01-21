@@ -2,8 +2,9 @@
 // Created by lijiahao on 9/10/16.
 //
 
-#include "CellCar.h"
-#include "GameController.h"
+#include "cellcar.h"
+#include "cellblock.h"
+#include "gamecontroller.h"
 #include "drawhelper.h"
 #include <random>
 #include <algorithm>
@@ -15,6 +16,7 @@ using namespace std;
 GameController::GameController() {}
 
 void GameController::startLooping() {
+    blockFactory();
     QTimer *timer = new QTimer(this);
     connect( timer, SIGNAL(timeout()), this, SLOT( loop() ) );
     timer->start(1000 / FPS);
@@ -36,6 +38,7 @@ void GameController::loop()
 void GameController::draw(QPainter *painter) {
     this->dh.syncPainter(painter);
     this->dh.clc();
+    this->dh.drawBlocks(this->edge);
     this->dh.drawCars(this->stage);
 }
 
@@ -51,4 +54,20 @@ void GameController::carFactory()
         }
         cnt = 1;
     }
+}
+
+void GameController::blockFactory()
+{
+    this->edge.push_back(*(new CellBlock(0, 5, 'l')));
+    this->edge.push_back(*(new CellBlock(1, 5, 'l')));
+    this->edge.push_back(*(new CellBlock(2, 5, 'l')));
+    this->edge.push_back(*(new CellBlock(3, 5, 'l')));
+    this->edge.push_back(*(new CellBlock(4, 5, 'l')));
+    this->edge.push_back(*(new CellBlock(1, 8, 'l')));
+    this->edge.push_back(*(new CellBlock(2, 8, 'l')));
+    this->edge.push_back(*(new CellBlock(3, 8, 'l')));
+    this->edge.push_back(*(new CellBlock(4, 8, 'l')));
+    this->edge.push_back(*(new CellBlock(2, 11, 'l')));
+    this->edge.push_back(*(new CellBlock(3, 11, 'l')));
+    this->edge.push_back(*(new CellBlock(4, 11, 'l')));
 }

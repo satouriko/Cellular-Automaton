@@ -25,16 +25,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    CellCar.cpp \
-    GameController.cpp \
     drawhelper.cpp \
-    arenawidget.cpp
+    arenawidget.cpp \
+    cell.cpp \
+    cellcar.cpp \
+    gamecontroller.cpp \
+    cellblock.cpp
 
 HEADERS  += mainwindow.h \
-    CellCar.h \
-    GameController.h \
     drawhelper.h \
-    arenawidget.h
+    arenawidget.h \
+    cell.h \
+    cellcar.h \
+    gamecontroller.h \
+    cellblock.h
 
 FORMS    += mainwindow.ui \
     arenawidget.ui

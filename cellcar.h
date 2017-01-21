@@ -15,10 +15,10 @@
 #define ACC 2.0
 
 #include <vector>
+#include "cell.h"
 
-class CellCar {
+class CellCar : public Cell {
     double speed;
-    double x, y;
     int _dir;
 
     void turn(int direction);
@@ -30,10 +30,6 @@ public:
                 std::vector<CellCar>::iterator oldbegin, std::vector<CellCar>::iterator oldend);
 
     void turn();
-
-    const double getX() const ;
-
-    const double getY() const ;
 
     const double getSpeed() const ;
 

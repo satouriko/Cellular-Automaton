@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "GameController.h"
+#include "gamecontroller.h"
 #include <iostream>
 
 using namespace std;

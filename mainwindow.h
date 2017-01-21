@@ -2,8 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "CellCar.h"
-#include "GameController.h"
+#include "cellcar.h"
+#include "gamecontroller.h"
 
 namespace Ui {
 class MainWindow;
