@@ -10,7 +10,7 @@
 #define LEFT 1
 #define RIGHT 3
 
-#define SAFEGAP 1
+#define SAFEGAP 2
 #define SPEEDLIMIT 100
 #define ACC 2.0
 
@@ -26,16 +26,19 @@ class CellCar {
 public:
     CellCar(int x, int y);
 
-    void moveOn(std::vector<CellCar>::iterator begin, std::vector<CellCar>::iterator end);
+    void moveOn(std::vector<CellCar>::iterator begin, std::vector<CellCar>::iterator end,
+                std::vector<CellCar>::iterator oldbegin, std::vector<CellCar>::iterator oldend);
 
     void turn();
 
-    const int getX() const ;
+    const double getX() const ;
 
-    const int getY() const ;
+    const double getY() const ;
 
-    void syncSpeed(std::vector<CellCar>::iterator begin, std::vector<CellCar>::iterator end);
+    const double getSpeed() const ;
+
+    void syncSpeed(std::vector<CellCar>::iterator begin, std::vector<CellCar>::iterator end,
+                   std::vector<CellCar>::iterator oldbegin, std::vector<CellCar>::iterator oldend);
 };
 
-bool operator==(const CellCar &objstruct1, const CellCar &objstruct2);  //重载“==”操作符
 #endif //CA_CELLCAR_H

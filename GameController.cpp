@@ -23,10 +23,11 @@ void GameController::startLooping() {
 void GameController::loop()
 {
     emit onRedraw();
+    vector<CellCar> temp(stage.begin(), stage.end());
     for (vector<CellCar>::iterator iter = this->stage.begin(); iter != this->stage.end(); ++iter) {
         if(iter->getY() > BOTTOMYLIM)
             iter = stage.erase(iter);
-        iter->moveOn(this->stage.begin(), this->stage.end());
+        iter->moveOn(this->stage.begin(), this->stage.end(), temp.begin(), temp.end());
     }
     carFactory();
 

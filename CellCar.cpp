@@ -13,12 +13,16 @@
 
 using namespace std;
 
-const int CellCar::getX() const {
+const double CellCar::getX() const {
     return x;
 }
 
-const int CellCar::getY() const {
+const double CellCar::getY() const {
     return y;
+}
+
+const double CellCar::getSpeed() const {
+    return speed;
 }
 
 CellCar::CellCar(int x, int y) : x(x), y(y) {
@@ -27,8 +31,9 @@ CellCar::CellCar(int x, int y) : x(x), y(y) {
     _dir = FORWARD;
 }
 
-void CellCar::moveOn(vector<CellCar>::iterator begin, vector<CellCar>::iterator end) {
-    syncSpeed(begin, end);
+void CellCar::moveOn(vector<CellCar>::iterator begin, vector<CellCar>::iterator end,
+                     vector<CellCar>::iterator oldbegin, vector<CellCar>::iterator oldend) {
+    syncSpeed(begin, end, oldbegin, oldend);
     if (_dir == FORWARD) {
         y += speed / FPS;
     } else if (_dir == BACK) {
@@ -40,93 +45,67 @@ void CellCar::moveOn(vector<CellCar>::iterator begin, vector<CellCar>::iterator 
     }
 }
 
-void CellCar::turn(int direction) {
-    if (direction == LEFT)
-        ++_dir;
-    else if (direction == RIGHT)
-        --_dir;
-    if (_dir == -1)
-        _dir = 3;
-    if (_dir == 4)
-        _dir = 0;
-}
+//void CellCar::turn(int direction) {
+//    if (direction == LEFT)
+//        ++_dir;
+//    else if (direction == RIGHT)
+//        --_dir;
+//    if (_dir == -1)
+//        _dir = 3;
+//    if (_dir == 4)
+//        _dir = 0;
+//}
 
-bool operator==(const CellCar &objstruct1, const CellCar &objstruct2)  //重载“==”操作符
-{
-    return fabs(objstruct1.getX() - objstruct2.getX()) <= 0 && objstruct1.getY() > objstruct2.getY() && objstruct1.getY() - objstruct2.getY() <= 1.0;//具体匹配条件自己设定，可以设定多个
-}
-
-void CellCar::syncSpeed(vector<CellCar>::iterator begin, vector<CellCar>::iterator end) {
-    bool flag = false;
-    CellCar *temp = 0;
+void CellCar::syncSpeed(vector<CellCar>::iterator begin, vector<CellCar>::iterator end,
+                        vector<CellCar>::iterator oldbegin, vector<CellCar>::iterator oldend) {
     switch (_dir) {
-        case FORWARD:
-            for (int i = 1; i <= SAFEGAP; ++i) {
-                temp = new CellCar(x, y + i - 0.5);
-                vector<CellCar>::iterator it = find(begin, end, *temp);
-                if(it != end && !(it->getX() == x && it->getY() == y)) {
-                    flag = true;
-                    break;
-                }
+    case FORWARD: {
+        vector<CellCar>::iterator fnst = oldend;
+        for(vector<CellCar>::iterator iter = oldbegin; iter != oldend; ++iter) {
+            if(iter->getX() == x && iter->getY() > y) {
+                if(fnst == oldend)
+                    fnst = iter;
+                else if(iter->getY() < fnst->getY())
+                    fnst = iter;
             }
-            if (flag)
-                speed = 0;
-            else
-                speed + ACC / FPS >= SPEEDLIMIT ? speed = SPEEDLIMIT : speed += ACC / FPS;
-            break;
+        }
+        if(fnst != oldend && fnst->getY() - y < SAFEGAP)
+            speed = fnst->getSpeed();
+        else
+            speed + ACC / FPS >= SPEEDLIMIT ? speed = SPEEDLIMIT : speed += ACC / FPS;
+    }
+        break;
 
-        case BACK:
-            bool flag;
-            for (int i = 1; i <= SAFEGAP; ++i) {
-                temp = new CellCar(x, y - i + 0.5);
-                vector<CellCar>::iterator it = find(begin, end, *temp);
-                if(it != end && !(it->getX() == x && it->getY() == y)) {
-                    flag = true;
-                    break;
-                }
+    case BACK: {
+        vector<CellCar>::iterator fnst = oldend;
+        for(vector<CellCar>::iterator iter = oldbegin; iter != oldend; ++iter) {
+            if(iter->getX() == x && iter->getY() < y) {
+                if(fnst == oldend)
+                    fnst = iter;
+                else if(iter->getY() > fnst->getY())
+                    fnst = iter;
             }
-            if (flag)
-                speed = 0;
-            else
-                speed + ACC / FPS >= SPEEDLIMIT ? speed = SPEEDLIMIT : speed += ACC / FPS;
-            break;
+        }
+        if(fnst != oldend && y - fnst->getY() < SAFEGAP)
+            speed = fnst->getSpeed();
+        else
+            speed + ACC / FPS >= SPEEDLIMIT ? speed = SPEEDLIMIT : speed += ACC / FPS;
+    }
 
-        case LEFT:
-            for (int i = 1; i <= SAFEGAP; ++i) {
-                temp = new CellCar(x + i - 0.5, y);
-                vector<CellCar>::iterator it = find(begin, end, *temp);
-                if(it != end && !(it->getX() == x && it->getY() == y)) {
-                    flag = true;
-                    break;
-                }
-            }
-            if (flag)
-                speed = 0;
-            else
-                speed + ACC / FPS >= SPEEDLIMIT ? speed = SPEEDLIMIT : speed += ACC / FPS;
-            break;
+    case LEFT: {
+    }
+        break;
 
-        case RIGHT:
-            for (int i = 1; i <= SAFEGAP; ++i) {
-                temp = new CellCar(x - i + 0.5, y);
-                vector<CellCar>::iterator it = find(begin, end, *temp);
-                if(it != end && !(it->getX() == x && it->getY() == y)) {
-                    flag = true;
-                    break;
-                }
-            }
-            if (flag)
-                speed = 0;
-            else
-                speed + ACC / FPS >= SPEEDLIMIT ? speed = SPEEDLIMIT : speed += ACC / FPS;
-            break;
+    case RIGHT:{
+    }
+        break;
     }
 }
 
-void CellCar::turn() {
-    bool flag = rand() % 2;
-    if (flag)
-        turn(LEFT);
-    else
-        turn(RIGHT);
-}
+//void CellCar::turn() {
+//    bool flag = rand() % 2;
+//    if (flag)
+//        turn(LEFT);
+//    else
+//        turn(RIGHT);
+//}
