@@ -58,16 +58,16 @@ void GameController::carFactory()
 
 void GameController::blockFactory()
 {
-//    this->edge.push_back(*(new CellBlock(0, 5, 'L')));
-//    this->edge.push_back(*(new CellBlock(1, 5, 'L')));
-//    this->edge.push_back(*(new CellBlock(2, 5, 'L')));
-//    this->edge.push_back(*(new CellBlock(3, 5, 'L')));
-//    this->edge.push_back(*(new CellBlock(4, 5, 'L')));
-//    this->edge.push_back(*(new CellBlock(1, 8, 'L')));
-//    this->edge.push_back(*(new CellBlock(2, 8, 'L')));
-//    this->edge.push_back(*(new CellBlock(3, 8, 'L')));
-//    this->edge.push_back(*(new CellBlock(4, 8, 'L')));
-//    this->edge.push_back(*(new CellBlock(2, 11, 'L')));
-//    this->edge.push_back(*(new CellBlock(3, 11, 'L')));
-//    this->edge.push_back(*(new CellBlock(4, 11, 'L')));
+    this->edge.push_back(*(new CellBlock(0, 5, 'L')));
+    this->edge.push_back(*(new CellBlock(1, 5, 'L')));
+    this->edge.push_back(*(new CellBlock(2, 5, 'L')));
+    this->edge.push_back(*(new CellBlock(3, 5, 'L')));
+    this->edge.push_back(*(new CellBlock(4, 5, 'L')));
+    this->edge.push_back(*(new CellBlock(1, 8, 'L')));
+    this->edge.push_back(*(new CellBlock(2, 8, 'L')));
+    this->edge.push_back(*(new CellBlock(3, 8, 'L')));
+    this->edge.push_back(*(new CellBlock(4, 8, 'L')));
+    this->edge.push_back(*(new CellBlock(2, 11, 'L')));
+    this->edge.push_back(*(new CellBlock(3, 11, 'L')));
+    this->edge.push_back(*(new CellBlock(4, 11, 'L')));
 }

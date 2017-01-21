@@ -11,7 +11,7 @@ enum { FORWARD, BACK, LEFT, RIGHT };
 
 // Relative Direction
 
-enum RelativeDir { GOAHEAD, GOLEFT, GORIGHT };
+enum RelativeDir { GOAHEAD, GOLEFT, GORIGHT, WAIT };
 
 #define SAFEGAP 2
 #define CONGESTGAP 5
@@ -31,8 +31,10 @@ class CellCar : public Cell {
     void turn(int direction);
     void syncSpeed(std::vector<CellCar>::const_iterator oldbegin, std::vector<CellCar>::const_iterator oldend,
                    std::vector<CellBlock>::const_iterator cbbegin, std::vector<CellBlock>::const_iterator cbend);
-    RelativeDir lineJudge(std::vector<CellBlock>::const_iterator cbbegin, std::vector<CellBlock>::const_iterator cbend,
-                          int lcnt, int rcnt, int mcnt);
+    RelativeDir lineJudge(std::vector<CellCar>::const_iterator oldbegin, std::vector<CellCar>::const_iterator oldend,
+                          int lcnt, int rcnt, int mcnt, char mgc);
+    RelativeDir lineJudge(std::vector<CellCar>::const_iterator oldbegin, std::vector<CellCar>::const_iterator oldend,
+                          char type);
     void crab();
 
 public:

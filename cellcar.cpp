@@ -11,6 +11,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <cmath>
+#include <iostream>
 
 using namespace std;
 
@@ -19,7 +20,7 @@ const double CellCar::getSpeed() const {
 }
 
 CellCar::CellCar(int x, int y) : Cell(x, y), status(GOAHEAD), tgx(x), tgy(y) {
-    const int MAXSPEED = 5, MINSPEED = 1;
+    const int MAXSPEED = 5, MINSPEED = 2;
     speed = rand() % (MAXSPEED + 1 - MINSPEED) + MINSPEED;
     _dir = FORWARD;
 }
@@ -54,6 +55,34 @@ void CellCar::syncSpeed(vector<CellCar>::const_iterator oldbegin, vector<CellCar
                         vector<CellBlock>::const_iterator cbbegin, vector<CellBlock>::const_iterator cbend) {
     switch (_dir) {
     case FORWARD: {
+        //Get Magic block
+        char mgc = '3';
+        for(vector<CellBlock>::const_iterator iter = cbbegin; iter != cbend; ++iter) {
+            if(fabs(iter->getX() - x) < 1 && iter->getY() > y && iter->getY() - y <= 1) {
+                mgc = iter->getType();
+                break;
+            }
+        }
+        //Magic Problem Upcase
+        if(mgc == 'L' || mgc == 'R' || mgc == '1' || mgc == '2') {
+            if(this->status == GOAHEAD) {
+                switch (lineJudge(oldbegin, oldend, mgc)) {
+                case GOLEFT:
+                    this->tgx = x + 1;
+                    this->status = GOLEFT;
+                    break;
+                case GORIGHT:
+                    this->tgx = x - 1;
+                    this->status = GORIGHT;
+                    break;
+                case WAIT:
+                    this->speed = 0;
+                    break;
+                }
+                return;
+            }
+        }
+        //
         vector<CellCar>::const_iterator fnst = oldend;
         int lcnt = 0, rcnt = 0, mcnt = 0;
         for(vector<CellCar>::const_iterator iter = oldbegin; iter != oldend; ++iter) {
@@ -70,24 +99,44 @@ void CellCar::syncSpeed(vector<CellCar>::const_iterator oldbegin, vector<CellCar
             else if(iter->getX() == x - 1 && iter->getY() > y && iter->getY() - y <= CONGESTGAP)
                 ++rcnt;
         }
+
+        //Overtake Problem
         if(fnst != oldend && fnst->getY() - y < SAFEGAP) {
             speed = fnst->getSpeed();
             if(this->status == GOAHEAD) {
-                switch(lineJudge(cbbegin, cbend, lcnt, rcnt, mcnt)) {
+                switch(lineJudge(oldbegin, oldend, lcnt, rcnt, mcnt, mgc)) {
                 case GOLEFT:
-                    //
                     this->tgx = x + 1;
                     this->status = GOLEFT;
-                    break;
+                    return;
                 case GORIGHT:
-                    //
                     this->tgx = x - 1;
                     this->status = GORIGHT;
+                    return;
                 }
             }
         }
         else
             speed + ACC / FPS >= SPEEDLIMIT ? speed = SPEEDLIMIT : speed += ACC / FPS;
+
+        //Magic Problem Lowcase
+        if(mgc != '3') {
+            if(this->status == GOAHEAD) {
+                switch (lineJudge(oldbegin, oldend, mgc)) {
+                case GOLEFT:
+                    this->tgx = x + 1;
+                    this->status = GOLEFT;
+                    break;
+                case GORIGHT:
+                    this->tgx = x - 1;
+                    this->status = GORIGHT;
+                    break;
+                case WAIT:
+                    this->speed = 0;
+                    break;
+                }
+            }
+        }
     }
         break;
 
@@ -97,22 +146,109 @@ void CellCar::syncSpeed(vector<CellCar>::const_iterator oldbegin, vector<CellCar
     }
 }
 
-RelativeDir CellCar::lineJudge(vector<CellBlock>::const_iterator cbbegin, vector<CellBlock>::const_iterator cbend,
-                               int lcnt, int rcnt, int mcnt)
+// Judge if we should go left or right or keep here while countering magic
+RelativeDir CellCar::lineJudge(vector<CellCar>::const_iterator oldbegin, vector<CellCar>::const_iterator oldend,
+                               char type)
 {
     switch (_dir) {
-    case FORWARD:
-        for(vector<CellBlock>::const_iterator iter = cbbegin; iter != cbend; ++iter) {
-            if(iter->getX() == x && iter->getY() > y && iter->getY() - y <= 1) {
-                if(iter->getType() == 'L') return GOLEFT;
-                else if(iter->getType() == 'R') return GORIGHT;
-                else if(iter->getType() == '1') return GOAHEAD;
-                else if(iter->getType() == '2') return lcnt < rcnt ? GOLEFT : GORIGHT;
-                else if(iter->getType() == 'l') return lcnt < mcnt ? GOLEFT : GOAHEAD;
-                else if(iter->getType() == 'r') return rcnt < mcnt ? GORIGHT : GOAHEAD;
+    case FORWARD: {
+        switch(type) {
+        case 'L': {
+            bool flag1 = false;
+            for(vector<CellCar>::const_iterator iter = oldbegin; iter != oldend; ++iter) {
+                if(iter->getX() == x + 1 && ( fabs(iter->getY() - y) < SAFEGAP || fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP)) {
+                    flag1 = true;
+                    break;
+                }
             }
+            if(flag1) return WAIT;
+            else return GOLEFT;
+        } break;
+        case 'R': {
+            bool flag2 = false;
+            for(vector<CellCar>::const_iterator iter = oldbegin; iter != oldend; ++iter) {
+                if(iter->getX() == x - 1 && ( fabs(iter->getY() - y) < SAFEGAP || fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP)) {
+                    flag2 = true;
+                    break;
+                }
+            }
+            if(flag2) return WAIT;
+            else return GORIGHT;
+        } break;
+        case '2': {
+            bool flag1 = false, flag2 = false;
+            for(vector<CellCar>::const_iterator iter = oldbegin; iter != oldend; ++iter) {
+                if(iter->getX() == x + 1 && ( fabs(iter->getY() - y) < SAFEGAP || fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP))
+                    flag1 = true;
+                if(iter->getX() == x - 1 && ( fabs(iter->getY() - y) < SAFEGAP || fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP))
+                    flag2 = true;
+                if(flag1 && flag2) break;
+            }
+            if(flag1 && flag2) return WAIT;
+            else if(flag1) return GORIGHT;
+            else if(flag2) return GOLEFT;
+            else
+                return rand() % 2 ? GOLEFT : GORIGHT;
+        } break;
+        case '1': {
+            return GOAHEAD;
+        } break;
+        case 'l': {
+            bool flag1 = false;
+            for(vector<CellCar>::const_iterator iter = oldbegin; iter != oldend; ++iter) {
+                if(iter->getX() == x + 1 && ( fabs(iter->getY() - y) < SAFEGAP || fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP)) {
+                    flag1 = true;
+                    break;
+                }
+            }
+            if(flag1) return GOAHEAD;
+            else return GOLEFT;
+        } break;
+        case 'r': {
+            bool flag2 = false;
+            for(vector<CellCar>::const_iterator iter = oldbegin; iter != oldend; ++iter) {
+                if(iter->getX() == x - 1 && ( fabs(iter->getY() - y) < SAFEGAP || fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP)) {
+                    flag2 = true;
+                    break;
+                }
+            }
+            if(flag2) return GOAHEAD;
+            else return GORIGHT;
+        } break;
         }
-        return lcnt < rcnt ? ( lcnt < mcnt ? GOLEFT : GOAHEAD ) : ( rcnt < mcnt ? GORIGHT : GOAHEAD );
+
+            }
+    default:
+        return GOAHEAD;
+    }
+}
+
+// Judge if we should go left or right or keep here while overtaking
+RelativeDir CellCar::lineJudge(vector<CellCar>::const_iterator oldbegin, vector<CellCar>::const_iterator oldend,
+                               int lcnt, int rcnt, int mcnt, char mgc)
+{
+    switch (_dir) {
+    case FORWARD: {
+        bool flag1 = false, flag2 = false;
+        for(vector<CellCar>::const_iterator iter = oldbegin; iter != oldend; ++iter) {
+            if(iter->getX() == x + 1 && ( fabs(iter->getY() - y) < SAFEGAP || fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP))
+                flag1 = true;
+            if(iter->getX() == x - 1 && ( fabs(iter->getY() - y) < SAFEGAP || fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP))
+                flag2 = true;
+            if(flag1 && flag2) break;
+        }
+        if(flag1 && flag2) return GOAHEAD;
+        else if(flag1) {
+            if(mgc == '3') return GORIGHT;
+            else return GOAHEAD;
+        }
+        else if(flag2) {
+            if(mgc == '3') return GOLEFT;
+            else return GOAHEAD;
+        }
+        else
+            return lcnt < rcnt ? ( lcnt < mcnt ? ( mgc == '3' ? GOLEFT : GOAHEAD ) : GOAHEAD ) : ( rcnt < mcnt ? ( mgc == '3' ? GORIGHT : GOAHEAD ) : GOAHEAD );
+    }
     default:
         return GOAHEAD;
     }
@@ -125,14 +261,18 @@ void CellCar::crab()
         switch(this->status) {
         case GOLEFT:
             x += speed / FPS;
+            if(x >= this->tgx) {
+                x = this->tgx;
+                this->status = GOAHEAD;
+            }
             break;
         case GORIGHT:
             x -= speed / FPS;
+            if(x <= this->tgx) {
+                x = this->tgx;
+                this->status = GOAHEAD;
+            }
             break;
-        }
-        if(x >= this->tgx) {
-            x = this->tgx;
-            this->status = GOAHEAD;
         }
         break;
     }
