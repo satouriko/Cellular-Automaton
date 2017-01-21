@@ -12,7 +12,7 @@
 #include <QWidget>
 
 #define LEFTXLIM 0
-#define RIGHTXLIM 6 //Exclude
+#define RIGHTXLIM 100 //Exclude
 #define TOPYLIM 0
 #define BOTTOMYLIM 100 //Exclude
 #define FPS 50

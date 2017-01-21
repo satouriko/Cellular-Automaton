@@ -29,7 +29,7 @@ void GameController::loop()
     for (vector<CellCar>::iterator iter = this->stage.begin(); iter != this->stage.end(); ++iter) {
         if(iter->getY() > BOTTOMYLIM)
             iter = stage.erase(iter);
-        iter->moveOn(this->stage.begin(), this->stage.end(), temp.begin(), temp.end());
+        iter->moveOn(temp.begin(), temp.end(), this->edge.begin(), this->edge.end());
     }
     carFactory();
 
@@ -58,16 +58,16 @@ void GameController::carFactory()
 
 void GameController::blockFactory()
 {
-    this->edge.push_back(*(new CellBlock(0, 5, 'l')));
-    this->edge.push_back(*(new CellBlock(1, 5, 'l')));
-    this->edge.push_back(*(new CellBlock(2, 5, 'l')));
-    this->edge.push_back(*(new CellBlock(3, 5, 'l')));
-    this->edge.push_back(*(new CellBlock(4, 5, 'l')));
-    this->edge.push_back(*(new CellBlock(1, 8, 'l')));
-    this->edge.push_back(*(new CellBlock(2, 8, 'l')));
-    this->edge.push_back(*(new CellBlock(3, 8, 'l')));
-    this->edge.push_back(*(new CellBlock(4, 8, 'l')));
-    this->edge.push_back(*(new CellBlock(2, 11, 'l')));
-    this->edge.push_back(*(new CellBlock(3, 11, 'l')));
-    this->edge.push_back(*(new CellBlock(4, 11, 'l')));
+//    this->edge.push_back(*(new CellBlock(0, 5, 'L')));
+//    this->edge.push_back(*(new CellBlock(1, 5, 'L')));
+//    this->edge.push_back(*(new CellBlock(2, 5, 'L')));
+//    this->edge.push_back(*(new CellBlock(3, 5, 'L')));
+//    this->edge.push_back(*(new CellBlock(4, 5, 'L')));
+//    this->edge.push_back(*(new CellBlock(1, 8, 'L')));
+//    this->edge.push_back(*(new CellBlock(2, 8, 'L')));
+//    this->edge.push_back(*(new CellBlock(3, 8, 'L')));
+//    this->edge.push_back(*(new CellBlock(4, 8, 'L')));
+//    this->edge.push_back(*(new CellBlock(2, 11, 'L')));
+//    this->edge.push_back(*(new CellBlock(3, 11, 'L')));
+//    this->edge.push_back(*(new CellBlock(4, 11, 'L')));
 }

@@ -6,7 +6,7 @@
 #include "cellblock.h"
 #include <vector>
 
-#define SIZE 20
+#define SIZE 10
 
 class DrawHelper
 {
