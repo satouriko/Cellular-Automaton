@@ -5,6 +5,7 @@
 #include "settings.h"
 #include "cellcar.h"
 #include "gamecontroller.h"
+#include "arenawidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,7 +19,7 @@ public:
     ~MainWindow();
 public slots:
     void redraw();
-    void addCellBlock(int x, int y);
+    void addCell(int x, int y);
 
 private slots:
     void on_LBrushRadioButton_clicked();
@@ -31,6 +32,10 @@ private slots:
     void on_pushButton_4_clicked();
 
     void on_pushButton_3_clicked();
+
+    void on_CarFactoryRadioButton_clicked();
+
+    void on_pushButton_5_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -25,5 +25,5 @@ void ArenaWidget::paintEvent(QPaintEvent *e)
 
 void ArenaWidget::mousePressEvent(QMouseEvent *e)
 {
-    emit onPaintCellBlock(e->x() / 20, e->y() / 20);
+    emit onPaintCell(e->x() / 20, e->y() / 20);
 }

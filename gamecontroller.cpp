@@ -21,7 +21,6 @@ GameController::GameController(Settings &s) : settings(s)
 }
 
 void GameController::startLooping() {
-    //blockFactory();
     timer->start(1000 / FPS);
 }
 
@@ -38,6 +37,11 @@ void GameController::clearBlock()
 void GameController::clearCar()
 {
     this->stage.clear();
+}
+
+void GameController::clearCarFactories()
+{
+    this->cfs.clear();
 }
 
 void GameController::updateParams()
@@ -71,45 +75,20 @@ void GameController::draw(QPainter *painter) {
     this->dh.clc();
     this->dh.drawBlocks(this->edge);
     this->dh.drawCars(this->stage);
+    this->dh.drawCarFactories(this->cfs);
 }
 
 void GameController::carFactory()
 {
-    static int cnt = 1;
-    if(cnt++ % (FPS / GENFREQ) == 0) {
-        for(int i = LEFTXLIM; i < RIGHTXLIM; ++i) {
+    for(vector<CarFactory>::iterator iter = cfs.begin(); iter != cfs.end(); ++iter) {
+        if(iter->cnt++ % (FPS / iter->genFreq) == 0) {
             if(rand() % 2) {
-                CellCar c(i, TOPYLIM, this->settings);
+                double speed = rand() % (iter->maxSpeed + 1 - iter->minSpeed) + iter->minSpeed;
+                CellCar c(iter->getX(), iter->getY(), speed, this->settings);
                 this->stage.push_back(c);
             }
+            iter->cnt = 1;
         }
-        cnt = 1;
-    }
-}
-
-void GameController::blockFactory()
-{
-    for(auto i = 0; i <= 30; ++i) {
-        this->edge.push_back(*(new CellBlock(0, i, 'L')));
-        this->edge.push_back(*(new CellBlock(7, i, 'R')));
-    }
-    for(auto i = 5; i <= 30; ++i) {
-        this->edge.push_back(*(new CellBlock(1, i, 'L')));
-    }
-    for(auto i = 8; i <= 30; ++i) {
-        this->edge.push_back(*(new CellBlock(2, i, 'L')));
-    }
-    for(auto i = 11; i <= 30; ++i) {
-        this->edge.push_back(*(new CellBlock(3, i, 'L')));
-    }
-    for(auto i = 1; i <= 4; ++i) {
-        this->edge.push_back(*(new CellBlock(i, 5, 'L')));
-    }
-    for(auto i = 2; i <= 4; ++i) {
-        this->edge.push_back(*(new CellBlock(i, 8, 'L')));
-    }
-    for(auto i = 3; i <= 4; ++i) {
-        this->edge.push_back(*(new CellBlock(i, 11, 'L')));
     }
 }
 
@@ -117,4 +96,10 @@ void GameController::blockFactory(int x, int y, char type)
 {
     CellBlock cb(x, y, type);
     this->edge.push_back(cb);
+}
+
+void GameController::cfFactory(int x, int y, int gf, int minSpeed, int maxSpeed)
+{
+    CarFactory cf(x, y, gf, minSpeed, maxSpeed);
+    this->cfs.push_back(cf);
 }

@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     cellcar.cpp \
     gamecontroller.cpp \
     cellblock.cpp \
-    settings.cpp
+    settings.cpp \
+    carfactory.cpp
 
 HEADERS  += mainwindow.h \
     drawhelper.h \
@@ -40,7 +41,8 @@ HEADERS  += mainwindow.h \
     cellcar.h \
     gamecontroller.h \
     cellblock.h \
-    settings.h
+    settings.h \
+    carfactory.h
 
 FORMS    += mainwindow.ui \
     arenawidget.ui

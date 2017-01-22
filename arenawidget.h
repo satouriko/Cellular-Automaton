@@ -22,7 +22,7 @@ private:
     Ui::ArenaWidget *ui;
 signals:
     void onDraw(QPainter *painter);
-    void onPaintCellBlock(int x, int y);
+    void onPaintCell(int x, int y);
 };
 
 #endif // ARENAWIDGET_H

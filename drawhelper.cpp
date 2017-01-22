@@ -19,6 +19,13 @@ void DrawHelper::drawBlocks(std::vector<CellBlock> &blocks)
     }
 }
 
+void DrawHelper::drawCarFactories(std::vector<CarFactory> &cfs)
+{
+    for(vector<CarFactory>::iterator iter = cfs.begin(); iter != cfs.end(); ++iter) {
+        drawCarFactory(*iter);
+    }
+}
+
 void DrawHelper::syncPainter(QPainter *painter)
 {
     this->painter = painter;
@@ -56,4 +63,12 @@ void DrawHelper::drawBlock(CellBlock &block)
     this->painter->setPen(QPen(Qt::white, 2, Qt::SolidLine, Qt::RoundCap));
     char text[] = {  block.getType(), '\0' };
     this->painter->drawText(rect, Qt::AlignHCenter, text);
+}
+
+void DrawHelper::drawCarFactory(CarFactory &cf)
+{
+    this->painter->setRenderHint(QPainter::Antialiasing, true);
+    this->painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap));
+    this->painter->setBrush(QBrush(Qt::white, Qt::SolidPattern));
+    this->painter->drawRect((int)(cf.getX() * SIZE), (int)(cf.getY() * SIZE), SIZE, SIZE);
 }

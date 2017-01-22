@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>566</width>
+    <width>623</width>
     <height>591</height>
    </rect>
   </property>
@@ -48,35 +48,63 @@
           <property name="title">
            <string>Brush</string>
           </property>
-          <widget class="QRadioButton" name="LBrushRadioButton">
-           <property name="geometry">
-            <rect>
-             <x>13</x>
-             <y>28</y>
-             <width>35</width>
-             <height>19</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>L</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QRadioButton" name="RBrushRadioButton">
-           <property name="geometry">
-            <rect>
-             <x>13</x>
-             <y>54</y>
-             <width>35</width>
-             <height>19</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>R</string>
-           </property>
-          </widget>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QRadioButton" name="LBrushRadioButton">
+             <property name="text">
+              <string>&amp;L</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="RBrushRadioButton">
+             <property name="text">
+              <string>R</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="CarFactoryRadioButton">
+             <property name="text">
+              <string>CarFactory</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_8">
+             <item>
+              <widget class="QSpinBox" name="gf_spinBox">
+               <property name="minimum">
+                <number>1</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="maxSpeed_spinBox">
+               <property name="maximum">
+                <number>1000</number>
+               </property>
+               <property name="value">
+                <number>1</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="minSpeed_spinBox">
+               <property name="maximum">
+                <number>1000</number>
+               </property>
+               <property name="value">
+                <number>5</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </widget>
         </item>
         <item>
@@ -102,6 +130,13 @@
             <widget class="QPushButton" name="pushButton_2">
              <property name="text">
               <string>Clear Cars</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_5">
+             <property name="text">
+              <string>Clear Factories</string>
              </property>
             </widget>
            </item>
@@ -263,8 +298,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>566</width>
-     <height>26</height>
+     <width>623</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>

@@ -6,6 +6,7 @@
 #define CA_GAMECONTROLLER_H
 
 #include "cellcar.h"
+#include "carfactory.h"
 #include "drawhelper.h"
 #include "settings.h"
 #include <vector>
@@ -34,20 +35,22 @@ public:
     void stopLooping();
     void clearBlock();
     void clearCar();
+    void clearCarFactories();
     void updateParams();
 
 public slots:
     void draw(QPainter *painter);
     void loop();
     void blockFactory(int x, int y, char type);
+    void cfFactory(int x, int y, int gf, int minSpeed, int maxSpeed);
 signals:
     void onRedraw();
 private:
     DrawHelper dh;
     std::vector<CellCar> stage;
     std::vector<CellBlock> edge;
+    std::vector<CarFactory> cfs;
     void carFactory();
-    void blockFactory();
     QTimer *timer;
     Settings &settings;
 };
