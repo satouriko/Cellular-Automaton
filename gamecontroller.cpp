@@ -4,6 +4,7 @@
 
 #include "cellcar.h"
 #include "cellblock.h"
+#include "carcollector.h"
 #include "gamecontroller.h"
 #include "drawhelper.h"
 #include <random>
@@ -62,6 +63,13 @@ void GameController::loop()
     emit onRedraw();
     vector<CellCar> temp(stage.begin(), stage.end());
     for (vector<CellCar>::iterator iter = this->stage.begin(); iter != this->stage.end(); ++iter) {
+        for (vector<CarCollector>::iterator iter2 = this->ccs.begin(); iter2 != this->ccs.end(); ++iter2) {
+            if(fabs(iter->getY() - iter2->getY()) < 0.5 && fabs(iter->getX() - iter2->getX()) < 0.5 ) {
+                iter = stage.erase(iter);
+                emit onIncreaseCC();
+                break;
+            }
+        }
         if(iter->getY() > BOTTOMYLIM)
             iter = stage.erase(iter);
         iter->moveOn(temp.begin(), temp.end(), this->edge.begin(), this->edge.end());
@@ -76,6 +84,7 @@ void GameController::draw(QPainter *painter) {
     this->dh.drawBlocks(this->edge);
     this->dh.drawCars(this->stage);
     this->dh.drawCarFactories(this->cfs);
+    this->dh.drawCarCollectors(this->ccs);
 }
 
 void GameController::carFactory()
@@ -102,4 +111,10 @@ void GameController::cfFactory(int x, int y, int gf, int minSpeed, int maxSpeed)
 {
     CarFactory cf(x, y, gf, minSpeed, maxSpeed);
     this->cfs.push_back(cf);
+}
+
+void GameController::ccFactory(int x, int y)
+{
+    CarCollector cc(x, y);
+    this->ccs.push_back(cc);
 }

@@ -26,6 +26,13 @@ void DrawHelper::drawCarFactories(std::vector<CarFactory> &cfs)
     }
 }
 
+void DrawHelper::drawCarCollectors(std::vector<CarCollector> &ccs)
+{
+    for(vector<CarCollector>::iterator iter = ccs.begin(); iter != ccs.end(); ++iter) {
+        drawCarCollector(*iter);
+    }
+}
+
 void DrawHelper::syncPainter(QPainter *painter)
 {
     this->painter = painter;
@@ -71,4 +78,12 @@ void DrawHelper::drawCarFactory(CarFactory &cf)
     this->painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap));
     this->painter->setBrush(QBrush(Qt::white, Qt::SolidPattern));
     this->painter->drawRect((int)(cf.getX() * SIZE), (int)(cf.getY() * SIZE), SIZE, SIZE);
+}
+
+void DrawHelper::drawCarCollector(CarCollector &cc)
+{
+    this->painter->setRenderHint(QPainter::Antialiasing, true);
+    this->painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap));
+    this->painter->setBrush(QBrush(Qt::white, Qt::SolidPattern));
+    this->painter->drawRect((int)(cc.getX() * SIZE), (int)(cc.getY() * SIZE), SIZE, SIZE);
 }

@@ -7,6 +7,7 @@
 
 #include "cellcar.h"
 #include "carfactory.h"
+#include "carcollector.h"
 #include "drawhelper.h"
 #include "settings.h"
 #include <vector>
@@ -14,7 +15,7 @@
 #include <QWidget>
 
 #define LEFTXLIM 0
-#define RIGHTXLIM 8 //Exclude
+#define RIGHTXLIM 30 //Exclude
 #define TOPYLIM 0
 #define BOTTOMYLIM 30 //Exclude
 /***************/
@@ -43,13 +44,16 @@ public slots:
     void loop();
     void blockFactory(int x, int y, char type);
     void cfFactory(int x, int y, int gf, int minSpeed, int maxSpeed);
+    void ccFactory(int x, int y);
 signals:
     void onRedraw();
+    void onIncreaseCC();
 private:
     DrawHelper dh;
     std::vector<CellCar> stage;
     std::vector<CellBlock> edge;
     std::vector<CarFactory> cfs;
+    std::vector<CarCollector> ccs;
     void carFactory();
     QTimer *timer;
     Settings &settings;

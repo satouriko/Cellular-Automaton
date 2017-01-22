@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>623</width>
-    <height>591</height>
+    <height>555</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -50,21 +50,25 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <item>
-            <widget class="QRadioButton" name="LBrushRadioButton">
-             <property name="text">
-              <string>&amp;L</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="RBrushRadioButton">
-             <property name="text">
-              <string>R</string>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_9">
+             <item>
+              <widget class="QRadioButton" name="LBrushRadioButton">
+               <property name="text">
+                <string>&amp;L</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="RBrushRadioButton">
+               <property name="text">
+                <string>&amp;R</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
             <widget class="QRadioButton" name="CarFactoryRadioButton">
@@ -103,6 +107,13 @@
               </widget>
              </item>
             </layout>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="CarCollectorRadioButton">
+             <property name="text">
+              <string>CarCollector</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -273,18 +284,28 @@
            </property>
           </widget>
          </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_5">
+        <property name="title">
+         <string>CarCollection</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_10">
          <item>
-          <spacer name="verticalSpacer">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
+          <widget class="QSpinBox" name="spinBox">
+           <property name="maximum">
+            <number>1000000</number>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_6">
+           <property name="text">
+            <string>Reset</string>
            </property>
-          </spacer>
+          </widget>
          </item>
         </layout>
        </widget>

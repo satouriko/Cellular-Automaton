@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->gc = new GameController(this->settings);
 
     connect(ui->widget, SIGNAL(onDraw(QPainter*)), this->gc, SLOT(draw(QPainter*)));
+    connect(this->gc, SIGNAL(onIncreaseCC()), this, SLOT(increaseCC()));
     connect(this->gc, SIGNAL(onRedraw()), this, SLOT(redraw()));
     connect(ui->widget, SIGNAL(onPaintCell(int,int)), this, SLOT(addCell(int,int)));
 
@@ -38,6 +39,9 @@ void MainWindow::addCell(int x, int y)
     if(ui->CarFactoryRadioButton->isChecked()) {
         this->gc->cfFactory(x, y, ui->gf_spinBox->value(), ui->minSpeed_spinBox->value(), ui->maxSpeed_spinBox->value());
     }
+    else if(ui->CarCollectorRadioButton->isChecked()) {
+        this->gc->ccFactory(x, y);
+    }
     else {
         char t = (ui->LBrushRadioButton->isChecked()) ? 'L' : 'R';
         this->gc->blockFactory(x, y, t);
@@ -49,11 +53,27 @@ void MainWindow::on_LBrushRadioButton_clicked()
 {
     ui->RBrushRadioButton->setChecked(false);
     ui->CarFactoryRadioButton->setChecked(false);
+    ui->CarCollectorRadioButton->setChecked(false);
 }
 
 void MainWindow::on_RBrushRadioButton_clicked()
 {
     ui->LBrushRadioButton->setChecked(false);
+    ui->CarFactoryRadioButton->setChecked(false);
+    ui->CarCollectorRadioButton->setChecked(false);
+}
+
+void MainWindow::on_CarFactoryRadioButton_clicked()
+{
+    ui->RBrushRadioButton->setChecked(false);
+    ui->LBrushRadioButton->setChecked(false);
+    ui->CarCollectorRadioButton->setChecked(false);
+}
+
+void MainWindow::on_CarCollectorRadioButton_clicked()
+{
+    ui->LBrushRadioButton->setChecked(false);
+    ui->RBrushRadioButton->setChecked(false);
     ui->CarFactoryRadioButton->setChecked(false);
 }
 
@@ -90,14 +110,17 @@ void MainWindow::on_pushButton_3_clicked()
     this->gc->updateParams();
 }
 
-void MainWindow::on_CarFactoryRadioButton_clicked()
-{
-    ui->RBrushRadioButton->setChecked(false);
-    ui->LBrushRadioButton->setChecked(false);
-}
-
 void MainWindow::on_pushButton_5_clicked()
 {
     this->gc->clearCarFactories();
     ui->widget->repaint();
+}
+
+void MainWindow::increaseCC() {
+    ui->spinBox->setValue(ui->spinBox->value() + 1);
+}
+
+void MainWindow::on_pushButton_6_clicked()
+{
+    ui->spinBox->setValue(0);
 }
