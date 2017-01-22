@@ -82,5 +82,5 @@ void MainWindow::on_pushButton_3_clicked()
 {
     this->settings.updateSettings(ui->safeGapSpinBox->value(), ui->speedLimitSpinBox->value(),
                                   ui->accDoubleSpinBox->value(), ui->fpsSpinBox->value());
-    this->gc->updateCellCarParams();
+    this->gc->updateParams();
 }

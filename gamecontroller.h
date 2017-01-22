@@ -34,7 +34,7 @@ public:
     void stopLooping();
     void clearBlock();
     void clearCar();
-    void updateCellCarParams();
+    void updateParams();
 
 public slots:
     void draw(QPainter *painter);

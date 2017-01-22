@@ -40,8 +40,10 @@ void GameController::clearCar()
     this->stage.clear();
 }
 
-void GameController::updateCellCarParams()
+void GameController::updateParams()
 {
+    this->FPS = settings.FPS;
+    this->timer->setInterval(1000 / this->FPS);
     for(auto it = this->stage.begin(); it != this->stage.end(); ++it)
     {
         it->SAFEGAP = this->settings.SAFEGAP;
