@@ -13,7 +13,7 @@ enum { FORWARD, BACK, LEFT, RIGHT };
 
 enum RelativeDir { GOAHEAD, GOLEFT, GORIGHT, WAIT };
 
-#define SAFEGAP 2
+#define SAFEGAP 1
 #define CONGESTGAP 5
 #define SPEEDLIMIT 100
 #define ACC 2.0
@@ -32,6 +32,7 @@ class CellCar : public Cell {
     void syncSpeed(std::vector<CellCar>::const_iterator oldbegin, std::vector<CellCar>::const_iterator oldend,
                    std::vector<CellBlock>::const_iterator cbbegin, std::vector<CellBlock>::const_iterator cbend);
     RelativeDir lineJudge(std::vector<CellCar>::const_iterator oldbegin, std::vector<CellCar>::const_iterator oldend,
+                          std::vector<CellBlock>::const_iterator cbbegin, std::vector<CellBlock>::const_iterator cbend,
                           int lcnt, int rcnt, int mcnt, char mgc);
     RelativeDir lineJudge(std::vector<CellCar>::const_iterator oldbegin, std::vector<CellCar>::const_iterator oldend,
                           char type);
@@ -39,6 +40,7 @@ class CellCar : public Cell {
 
 public:
     CellCar(int x, int y);
+    CellCar(int x, int y, double speed);
 
     void moveOn(std::vector<CellCar>::const_iterator oldbegin, std::vector<CellCar>::const_iterator oldend,
                 std::vector<CellBlock>::const_iterator cbbegin, std::vector<CellBlock>::const_iterator cbend);

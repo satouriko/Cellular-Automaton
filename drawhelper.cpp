@@ -34,8 +34,15 @@ void DrawHelper::clc()
 void DrawHelper::drawCar(CellCar &car)
 {
     this->painter->setRenderHint(QPainter::Antialiasing, true);
-    this->painter->setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap));
-    this->painter->setBrush(QBrush(Qt::black, Qt::SolidPattern));
+    if(car.getSpeed() != 0) {
+        this->painter->setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap));
+        this->painter->setBrush(QBrush(Qt::black, Qt::SolidPattern));
+    }
+    else {
+        this->painter->setPen(QPen(Qt::red, 2, Qt::SolidLine, Qt::RoundCap));
+        this->painter->setBrush(QBrush(Qt::red, Qt::SolidPattern));
+
+    }
     this->painter->drawRect((int)(car.getX() * SIZE), (int)(car.getY() * SIZE), SIZE, SIZE);
 }
 
