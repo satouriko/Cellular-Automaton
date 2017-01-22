@@ -2,6 +2,7 @@
 #define ARENAWIDGET_H
 
 #include <QWidget>
+#include <QMouseEvent>
 
 namespace Ui {
 class ArenaWidget;
@@ -16,10 +17,12 @@ public:
     ~ArenaWidget();
 protected:
     void paintEvent(QPaintEvent *e);
+    void mousePressEvent(QMouseEvent *e);
 private:
     Ui::ArenaWidget *ui;
 signals:
     void onDraw(QPainter *painter);
+    void onPaintCellBlock(int x, int y);
 };
 
 #endif // ARENAWIDGET_H

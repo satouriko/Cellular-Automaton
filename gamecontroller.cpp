@@ -13,13 +13,42 @@
 
 using namespace std;
 
-GameController::GameController() {}
+GameController::GameController(Settings &s) : settings(s)
+{
+    this->timer = new QTimer(this);
+    connect( timer, SIGNAL(timeout()), this, SLOT( loop() ) );
+    this->FPS = s.FPS;
+}
 
 void GameController::startLooping() {
-    blockFactory();
-    QTimer *timer = new QTimer(this);
-    connect( timer, SIGNAL(timeout()), this, SLOT( loop() ) );
+    //blockFactory();
     timer->start(1000 / FPS);
+}
+
+void GameController::stopLooping()
+{
+    timer->stop();
+}
+
+void GameController::clearBlock()
+{
+    this->edge.clear();
+}
+
+void GameController::clearCar()
+{
+    this->stage.clear();
+}
+
+void GameController::updateCellCarParams()
+{
+    for(auto it = this->stage.begin(); it != this->stage.end(); ++it)
+    {
+        it->SAFEGAP = this->settings.SAFEGAP;
+        it->SPEEDLIMIT = this->settings.SPEEDLIMIT;
+        it->ACC = this->settings.ACC;
+        it->FPS = this->settings.FPS;
+    }
 }
 
 void GameController::loop()
@@ -48,8 +77,8 @@ void GameController::carFactory()
     if(cnt++ % (FPS / GENFREQ) == 0) {
         for(int i = LEFTXLIM; i < RIGHTXLIM; ++i) {
             if(rand() % 2) {
-                CellCar *c = new CellCar(i, TOPYLIM);
-                this->stage.push_back(*c);
+                CellCar c(i, TOPYLIM, this->settings);
+                this->stage.push_back(c);
             }
         }
         cnt = 1;
@@ -80,4 +109,10 @@ void GameController::blockFactory()
     for(auto i = 3; i <= 4; ++i) {
         this->edge.push_back(*(new CellBlock(i, 11, 'L')));
     }
+}
+
+void GameController::blockFactory(int x, int y, char type)
+{
+    CellBlock cb(x, y, type);
+    this->edge.push_back(cb);
 }

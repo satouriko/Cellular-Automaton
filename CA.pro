@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     cell.cpp \
     cellcar.cpp \
     gamecontroller.cpp \
-    cellblock.cpp
+    cellblock.cpp \
+    settings.cpp
 
 HEADERS  += mainwindow.h \
     drawhelper.h \
@@ -38,7 +39,8 @@ HEADERS  += mainwindow.h \
     cell.h \
     cellcar.h \
     gamecontroller.h \
-    cellblock.h
+    cellblock.h \
+    settings.h
 
 FORMS    += mainwindow.ui \
     arenawidget.ui

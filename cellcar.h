@@ -13,12 +13,14 @@ enum { FORWARD, BACK, LEFT, RIGHT };
 
 enum RelativeDir { GOAHEAD, GOLEFT, GORIGHT, WAIT };
 
-#define SAFEGAP 1
 #define CONGESTGAP 5
-#define SPEEDLIMIT 100
-#define ACC 2.0
-
+/***************/
+//#define SAFEGAP 1
+//#define SPEEDLIMIT 100
+//#define ACC 2.0
+/***************/
 #include <vector>
+#include "settings.h"
 #include "cell.h"
 #include "cellblock.h"
 
@@ -39,8 +41,12 @@ class CellCar : public Cell {
     void crab();
 
 public:
-    CellCar(int x, int y);
-    CellCar(int x, int y, double speed);
+    CellCar(int x, int y, Settings &s);
+    CellCar(int x, int y, double speed, Settings &s);
+    int SAFEGAP;
+    int SPEEDLIMIT;
+    double ACC;
+    int FPS;
 
     void moveOn(std::vector<CellCar>::const_iterator oldbegin, std::vector<CellCar>::const_iterator oldend,
                 std::vector<CellBlock>::const_iterator cbbegin, std::vector<CellBlock>::const_iterator cbend);

@@ -19,13 +19,21 @@ const double CellCar::getSpeed() const {
     return speed;
 }
 
-CellCar::CellCar(int x, int y) : Cell(x, y), status(GOAHEAD), tgx(x), tgy(y), _dir(FORWARD) {
+CellCar::CellCar(int x, int y, Settings &s) : Cell(x, y), status(GOAHEAD), tgx(x), tgy(y), _dir(FORWARD) {
     const int MAXSPEED = 5, MINSPEED = 2;
     speed = rand() % (MAXSPEED + 1 - MINSPEED) + MINSPEED;
+    this->SAFEGAP = s.SAFEGAP;
+    this->SPEEDLIMIT = s.SPEEDLIMIT;
+    this->ACC = s.ACC;
+    this->FPS = s.FPS;
 }
 
-CellCar::CellCar(int x, int y, double speed) : Cell(x, y), status(GOAHEAD), tgx(x), tgy(y), _dir(FORWARD)
+CellCar::CellCar(int x, int y, double speed, Settings &s) : Cell(x, y), status(GOAHEAD), tgx(x), tgy(y), _dir(FORWARD), speed(speed)
 {
+    this->SAFEGAP = s.SAFEGAP;
+    this->SPEEDLIMIT = s.SPEEDLIMIT;
+    this->ACC = s.ACC;
+    this->FPS = s.FPS;
 }
 
 void CellCar::moveOn(vector<CellCar>::const_iterator oldbegin, vector<CellCar>::const_iterator oldend,
