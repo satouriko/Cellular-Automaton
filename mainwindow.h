@@ -19,7 +19,7 @@ public:
     ~MainWindow();
 public slots:
     void redraw();
-    void addCell(int x, int y);
+    void addCell(int x, int y, bool add);
     void increaseCC();
 
 private slots:
@@ -41,6 +41,12 @@ private slots:
     void on_pushButton_6_clicked();
 
     void on_CarCollectorRadioButton_clicked();
+
+    void on__1BrushRadioButton_clicked();
+
+    void on_lBrushRadioButton_clicked();
+
+    void on_rBrushRadioButton_clicked();
 
 private:
     Ui::MainWindow *ui;

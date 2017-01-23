@@ -25,5 +25,9 @@ void ArenaWidget::paintEvent(QPaintEvent *e)
 
 void ArenaWidget::mousePressEvent(QMouseEvent *e)
 {
-    emit onPaintCell(e->x() / 20, e->y() / 20);
+    if(e->button() == Qt::RightButton) {
+        emit onPaintCell(e->x() / 20, e->y() / 20, false);
+    }
+    else
+        emit onPaintCell(e->x() / 20, e->y() / 20, true);
 }

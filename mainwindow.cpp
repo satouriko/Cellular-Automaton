@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->widget, SIGNAL(onDraw(QPainter*)), this->gc, SLOT(draw(QPainter*)));
     connect(this->gc, SIGNAL(onIncreaseCC()), this, SLOT(increaseCC()));
     connect(this->gc, SIGNAL(onRedraw()), this, SLOT(redraw()));
-    connect(ui->widget, SIGNAL(onPaintCell(int,int)), this, SLOT(addCell(int,int)));
+    connect(ui->widget, SIGNAL(onPaintCell(int,int,bool)), this, SLOT(addCell(int,int,bool)));
 
     this->gc->startLooping();
 }
@@ -34,7 +34,7 @@ void MainWindow::redraw()
     ui->widget->repaint();
 }
 
-void MainWindow::addCell(int x, int y)
+void MainWindow::addCell(int x, int y, bool add)
 {
     if(ui->CarFactoryRadioButton->isChecked()) {
         this->gc->cfFactory(x, y, ui->gf_spinBox->value(), ui->minSpeed_spinBox->value(), ui->maxSpeed_spinBox->value());
@@ -43,8 +43,15 @@ void MainWindow::addCell(int x, int y)
         this->gc->ccFactory(x, y);
     }
     else {
-        char t = (ui->LBrushRadioButton->isChecked()) ? 'L' : 'R';
-        this->gc->blockFactory(x, y, t);
+        if(!add)
+            this->gc->blockDistroyer(x, y);
+        else {
+            char t = (ui->LBrushRadioButton->isChecked()) ? 'L' : (
+                     (ui->RBrushRadioButton->isChecked()) ? 'R' : (
+                     (ui->lBrushRadioButton->isChecked()) ? 'l' : (
+                     (ui->rBrushRadioButton->isChecked()) ? 'r' : '1' )));
+            this->gc->blockFactory(x, y, t);
+        }
     }
     ui->widget->repaint();
 }
@@ -54,6 +61,9 @@ void MainWindow::on_LBrushRadioButton_clicked()
     ui->RBrushRadioButton->setChecked(false);
     ui->CarFactoryRadioButton->setChecked(false);
     ui->CarCollectorRadioButton->setChecked(false);
+    ui->_1BrushRadioButton->setChecked(false);
+    ui->lBrushRadioButton->setChecked(false);
+    ui->rBrushRadioButton->setChecked(false);
 }
 
 void MainWindow::on_RBrushRadioButton_clicked()
@@ -61,6 +71,9 @@ void MainWindow::on_RBrushRadioButton_clicked()
     ui->LBrushRadioButton->setChecked(false);
     ui->CarFactoryRadioButton->setChecked(false);
     ui->CarCollectorRadioButton->setChecked(false);
+    ui->_1BrushRadioButton->setChecked(false);
+    ui->lBrushRadioButton->setChecked(false);
+    ui->rBrushRadioButton->setChecked(false);
 }
 
 void MainWindow::on_CarFactoryRadioButton_clicked()
@@ -68,6 +81,9 @@ void MainWindow::on_CarFactoryRadioButton_clicked()
     ui->RBrushRadioButton->setChecked(false);
     ui->LBrushRadioButton->setChecked(false);
     ui->CarCollectorRadioButton->setChecked(false);
+    ui->_1BrushRadioButton->setChecked(false);
+    ui->lBrushRadioButton->setChecked(false);
+    ui->rBrushRadioButton->setChecked(false);
 }
 
 void MainWindow::on_CarCollectorRadioButton_clicked()
@@ -75,7 +91,41 @@ void MainWindow::on_CarCollectorRadioButton_clicked()
     ui->LBrushRadioButton->setChecked(false);
     ui->RBrushRadioButton->setChecked(false);
     ui->CarFactoryRadioButton->setChecked(false);
+    ui->_1BrushRadioButton->setChecked(false);
+    ui->lBrushRadioButton->setChecked(false);
+    ui->rBrushRadioButton->setChecked(false);
 }
+
+void MainWindow::on__1BrushRadioButton_clicked()
+{
+    ui->LBrushRadioButton->setChecked(false);
+    ui->RBrushRadioButton->setChecked(false);
+    ui->CarFactoryRadioButton->setChecked(false);
+    ui->CarCollectorRadioButton->setChecked(false);
+    ui->lBrushRadioButton->setChecked(false);
+    ui->rBrushRadioButton->setChecked(false);
+}
+
+void MainWindow::on_lBrushRadioButton_clicked()
+{
+    ui->LBrushRadioButton->setChecked(false);
+    ui->RBrushRadioButton->setChecked(false);
+    ui->CarFactoryRadioButton->setChecked(false);
+    ui->CarCollectorRadioButton->setChecked(false);
+    ui->_1BrushRadioButton->setChecked(false);
+    ui->rBrushRadioButton->setChecked(false);
+}
+
+void MainWindow::on_rBrushRadioButton_clicked()
+{
+    ui->LBrushRadioButton->setChecked(false);
+    ui->RBrushRadioButton->setChecked(false);
+    ui->CarFactoryRadioButton->setChecked(false);
+    ui->CarCollectorRadioButton->setChecked(false);
+    ui->_1BrushRadioButton->setChecked(false);
+    ui->lBrushRadioButton->setChecked(false);
+}
+
 
 void MainWindow::on_pushButton_clicked()
 {

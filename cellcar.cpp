@@ -170,7 +170,7 @@ RelativeDir CellCar::lineJudge(vector<CellCar>::const_iterator oldbegin, vector<
         case 'L': {
             bool flag1 = false;
             for(vector<CellCar>::const_iterator iter = oldbegin; iter != oldend; ++iter) {
-                if(iter->getX() == x + 1 && fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP) {
+                if(fabs(iter->getX() - (x + 1)) < 1 && fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP) {
                     flag1 = true;
                     break;
                 }
@@ -181,7 +181,7 @@ RelativeDir CellCar::lineJudge(vector<CellCar>::const_iterator oldbegin, vector<
         case 'R': {
             bool flag2 = false;
             for(vector<CellCar>::const_iterator iter = oldbegin; iter != oldend; ++iter) {
-                if(iter->getX() == x - 1 && fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP) {
+                if(fabs(iter->getX() - (x - 1)) < 1 && fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP) {
                     flag2 = true;
                     break;
                 }
@@ -192,9 +192,9 @@ RelativeDir CellCar::lineJudge(vector<CellCar>::const_iterator oldbegin, vector<
         case '2': {
             bool flag1 = false, flag2 = false;
             for(vector<CellCar>::const_iterator iter = oldbegin; iter != oldend; ++iter) {
-                if(iter->getX() == x + 1 && fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP)
+                if(fabs(iter->getX() - (x + 1)) && fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP)
                     flag1 = true;
-                if(iter->getX() == x - 1 && fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP)
+                if(fabs(iter->getX() - (x - 1)) && fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP)
                     flag2 = true;
                 if(flag1 && flag2) break;
             }
@@ -210,7 +210,7 @@ RelativeDir CellCar::lineJudge(vector<CellCar>::const_iterator oldbegin, vector<
         case 'l': {
             bool flag1 = false;
             for(vector<CellCar>::const_iterator iter = oldbegin; iter != oldend; ++iter) {
-                if(iter->getX() == x + 1 && fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP) {
+                if(fabs(iter->getX() - (x + 1)) < 1 && fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP) {
                     flag1 = true;
                     break;
                 }
@@ -221,7 +221,7 @@ RelativeDir CellCar::lineJudge(vector<CellCar>::const_iterator oldbegin, vector<
         case 'r': {
             bool flag2 = false;
             for(vector<CellCar>::const_iterator iter = oldbegin; iter != oldend; ++iter) {
-                if(iter->getX() == x - 1 && fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP) {
+                if(fabs(iter->getX() - (x - 1)) && fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP) {
                     flag2 = true;
                     break;
                 }

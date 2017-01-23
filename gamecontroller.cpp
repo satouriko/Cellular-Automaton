@@ -112,6 +112,15 @@ void GameController::blockFactory(int x, int y, char type)
     this->edge.push_back(cb);
 }
 
+void GameController::blockDistroyer(int x, int y)
+{
+    for(auto iter = this->edge.begin(); iter != edge.end(); ++iter) {
+        if(iter->getX() == x && iter->getY() == y) {
+            iter = edge.erase(iter);
+        }
+    }
+}
+
 void GameController::cfFactory(int x, int y, int gf, int minSpeed, int maxSpeed)
 {
     CarFactory cf(x, y, gf, minSpeed, maxSpeed);

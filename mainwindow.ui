@@ -68,6 +68,27 @@
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QRadioButton" name="_1BrushRadioButton">
+               <property name="text">
+                <string>1</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="lBrushRadioButton">
+               <property name="text">
+                <string>l</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="rBrushRadioButton">
+               <property name="text">
+                <string>r</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
            <item>
@@ -320,7 +341,7 @@
      <x>0</x>
      <y>0</y>
      <width>623</width>
-     <height>25</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>
