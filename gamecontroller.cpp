@@ -61,18 +61,23 @@ void GameController::updateParams()
 void GameController::loop()
 {
     emit onRedraw();
-    vector<CellCar> temp(stage.begin(), stage.end());
-    for (vector<CellCar>::iterator iter = this->stage.begin(); iter != this->stage.end(); ++iter) {
+    for (vector<CellCar>::iterator iter = this->stage.begin(); iter != this->stage.end(); ) {
+        bool flag = false;
         for (vector<CarCollector>::iterator iter2 = this->ccs.begin(); iter2 != this->ccs.end(); ++iter2) {
             if(fabs(iter->getY() - iter2->getY()) < 0.5 && fabs(iter->getX() - iter2->getX()) < 0.5 ) {
                 iter = stage.erase(iter);
                 emit onIncreaseCC();
-                break;
+                flag = true; break;
             }
         }
-        if(iter->getY() > BOTTOMYLIM)
+        if(flag) continue;
+        if(iter->getY() > BOTTOMYLIM) {
             iter = stage.erase(iter);
+            continue;
+        }
+        vector<CellCar> temp(stage.begin(), stage.end());
         iter->moveOn(temp.begin(), temp.end(), this->edge.begin(), this->edge.end());
+        ++iter;
     }
     carFactory();
 

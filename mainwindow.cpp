@@ -79,12 +79,16 @@ void MainWindow::on_CarCollectorRadioButton_clicked()
 
 void MainWindow::on_pushButton_clicked()
 {
+    if(ui->pushButton_4->text() == "Pause")
+        emit on_pushButton_4_clicked();
     this->gc->clearBlock();
     ui->widget->repaint();
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
+    if(ui->pushButton_4->text() == "Pause")
+        emit on_pushButton_4_clicked();
     this->gc->clearCar();
     ui->widget->repaint();
 }
@@ -112,6 +116,8 @@ void MainWindow::on_pushButton_3_clicked()
 
 void MainWindow::on_pushButton_5_clicked()
 {
+    if(ui->pushButton_4->text() == "Pause")
+        emit on_pushButton_4_clicked();
     this->gc->clearCarFactories();
     ui->widget->repaint();
 }
