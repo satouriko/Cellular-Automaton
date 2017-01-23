@@ -8,11 +8,11 @@ class GameController;
 class CarFactory : public Cell
 {
 public:
-    CarFactory(int x, int y, int gf, int ns, int xs);
-    const int getGenFreq() const;
+    CarFactory(int x, int y, double gf, int ns, int xs);
+    const double getGenFreq() const;
     friend class GameController;
 private:
-    int genFreq;
+    double genFreq;
     int cnt;
     int minSpeed;
     int maxSpeed;

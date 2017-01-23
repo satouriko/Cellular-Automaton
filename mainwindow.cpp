@@ -37,7 +37,7 @@ void MainWindow::redraw()
 void MainWindow::addCell(int x, int y, bool add)
 {
     if(ui->CarFactoryRadioButton->isChecked()) {
-        this->gc->cfFactory(x, y, ui->gf_spinBox->value(), ui->minSpeed_spinBox->value(), ui->maxSpeed_spinBox->value());
+        this->gc->cfFactory(x, y, ui->gf_SpinBox->value(), ui->minSpeed_spinBox->value(), ui->maxSpeed_spinBox->value());
     }
     else if(ui->CarCollectorRadioButton->isChecked()) {
         this->gc->ccFactory(x, y);

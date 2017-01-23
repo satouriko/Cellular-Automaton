@@ -44,7 +44,7 @@ public slots:
     void loop();
     void blockFactory(int x, int y, char type);
     void blockDistroyer(int x, int y);
-    void cfFactory(int x, int y, int gf, int minSpeed, int maxSpeed);
+    void cfFactory(int x, int y, double gf, int minSpeed, int maxSpeed);
     void ccFactory(int x, int y);
 signals:
     void onRedraw();

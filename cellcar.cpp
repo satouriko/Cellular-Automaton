@@ -221,7 +221,7 @@ RelativeDir CellCar::lineJudge(vector<CellCar>::const_iterator oldbegin, vector<
         case 'r': {
             bool flag2 = false;
             for(vector<CellCar>::const_iterator iter = oldbegin; iter != oldend; ++iter) {
-                if(fabs(iter->getX() - (x - 1)) && fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP) {
+                if(fabs(iter->getX() - (x - 1)) < 1 && fabs(iter->getY() + iter->getSpeed() - y - speed )  < SAFEGAP) {
                     flag2 = true;
                     break;
                 }

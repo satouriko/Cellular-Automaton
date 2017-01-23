@@ -101,9 +101,9 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_8">
              <item>
-              <widget class="QSpinBox" name="gf_spinBox">
+              <widget class="QDoubleSpinBox" name="gf_SpinBox">
                <property name="minimum">
-                <number>1</number>
+                <double>0.000000000000000</double>
                </property>
               </widget>
              </item>

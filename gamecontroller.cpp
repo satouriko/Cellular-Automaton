@@ -95,7 +95,7 @@ void GameController::draw(QPainter *painter) {
 void GameController::carFactory()
 {
     for(vector<CarFactory>::iterator iter = cfs.begin(); iter != cfs.end(); ++iter) {
-        if(iter->cnt++ % (FPS / iter->genFreq) == 0) {
+        if(iter->cnt++ % (int)(FPS / iter->genFreq) == 0) {
             if(rand() % 2) {
                 double speed = rand() % (iter->maxSpeed + 1 - iter->minSpeed) + iter->minSpeed;
                 CellCar c(iter->getX(), iter->getY(), speed, this->settings);
@@ -114,14 +114,16 @@ void GameController::blockFactory(int x, int y, char type)
 
 void GameController::blockDistroyer(int x, int y)
 {
-    for(auto iter = this->edge.begin(); iter != edge.end(); ++iter) {
+    for(auto iter = this->edge.begin(); iter != edge.end(); ) {
         if(iter->getX() == x && iter->getY() == y) {
             iter = edge.erase(iter);
+            continue;
         }
+        ++iter;
     }
 }
 
-void GameController::cfFactory(int x, int y, int gf, int minSpeed, int maxSpeed)
+void GameController::cfFactory(int x, int y, double gf, int minSpeed, int maxSpeed)
 {
     CarFactory cf(x, y, gf, minSpeed, maxSpeed);
     this->cfs.push_back(cf);
